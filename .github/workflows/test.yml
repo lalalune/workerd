@@ -97,6 +97,24 @@ jobs:
       BAZEL_CACHE_KEY: ${{ secrets.BAZEL_CACHE_KEY }}
       WORKERS_MIRROR_URL: ${{ secrets.WORKERS_MIRROR_URL }}
 
+  coverage-linux:
+    uses: ./.github/workflows/_bazel.yml
+    with:
+      image: ubuntu-22.04-16core
+      os_name: linux
+      arch_name: 'X64'
+      suffix: 'coverage'
+      extra_bazel_args: '--config=ci-test --config=ci-linux'
+      upload_test_logs: true
+      upload_binary: false
+      build_container_images: false
+      run_coverage: true
+      run_tests: false
+    secrets:
+      BAZEL_CACHE_KEY: ${{ secrets.BAZEL_CACHE_KEY }}
+      WORKERS_MIRROR_URL: ${{ secrets.WORKERS_MIRROR_URL }}
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
   lint:
     uses: ./.github/workflows/_bazel.yml
     with:
